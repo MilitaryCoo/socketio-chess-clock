@@ -6,7 +6,7 @@ var io = require("socket.io")(server);
 var port = process.env.PORT || 3000;
 var timerTimes = {test:[45*600,45*600]};
 
-const CLOCK_TIME = 1 * 10 * 10 // in tenths of a second
+const CLOCK_TIME = 45 * 60 * 10 // in tenths of a second
 
 server.listen(port, function() {
   console.log("Server listening at port %d", port);
