@@ -1,0 +1,19 @@
+{
+	"name": "sequoia-lake-army",
+	"version": "0.1.0",
+	"description": "A node js chess clock",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"dependencies": {
+		"express": "^4.12.4",
+		"socket.io": "*"
+	},
+	"keywords": [
+		"node",
+		"express",
+		"chess clock"
+	],
+	"license": "MIT"
+}
