@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Socket.IO Chess Clock</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="login">
+      <h2>
+        OwenClock 3000
+      </h2>
+      <input type="text" maxlength="4" class="pwdInput" />
+      <button id="submitPwd">
+        Join room
+      </button>
+    </div>
+
+    <div id="chessclock">
+      <div class="side">
+        <div class="clock ina" id="clock0" data-action="start0">
+          <div>
+            <span id="minutes0">--</span>:<span id="seconds0">--</span>.<span
+              id="tenths0"
+              >-</span
+            >
+          </div>
+        </div>
+        <button class="act" id="btn0">
+          Home
+        </button>
+      </div>
+
+      <div class="side">
+        <div id="info">
+          <h2>OwenClock 3000</h2>
+          <p>Room <span id="roomId"></span></p>
+        </div>
+        <button class="ina" id="pause" data-action="pause" disabled>
+          Pause
+        </button>
+      </div>
+
+      <div class="side">
+        <div class="clock ina" id="clock1" data-action="start1">
+          <div>
+            <span id="minutes1">--</span>:<span id="seconds1">--</span>.<span
+              id="tenths1"
+              >-</span
+            >
+          </div>
+        </div>
+        <button class="act" id="btn1">
+          Visiting
+        </button>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/main.js"></script>
+  </body>
+</html>

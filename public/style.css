@@ -1,0 +1,242 @@
+/* Fix user-agent */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  padding: 2vh 2vw;
+  margin: 0;
+  background-color: #aaa;
+}
+
+div#login {
+  text-align: center;
+  margin: 36vh auto 0 auto;
+}
+
+div#chessclock {
+  width: calc(100% - 4vw);
+  height: calc(100% - 4vh);
+  margin: 2vh auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #611;
+  border: 0.25rem outset #500;
+  user-select: none;
+}
+
+div.side {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0.5rem;
+}
+
+div.clock,
+div.side button,
+div#info {
+  font-size: 5vw;
+  text-align: center;
+  flex-basis: 30%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0.5rem;
+}
+div#info {
+  font-size: 2vw;
+  color: #fff;
+  text-shadow: 2px 2px 0px #000, -2px 2px 0px #000, 2px -2px 0px #000,
+    -2px -2px 0px #000;
+}
+div#info p {
+  text-align: center;
+  font-family: monospace;
+}
+span#roomId {
+  user-select: text;
+}
+
+div.clock {
+  font-family: monospace;
+  border: 0.25rem inset #775;
+  background-color: #997;
+  color: #114;
+}
+div.side button {
+  background-color: #999;
+  border: 0.25rem outset #888;
+  cursor: pointer;
+}
+div.buffer {
+  min-width: 20%;
+  min-height: 20%;
+}
+div.death span {
+  color: darkred;
+}
+
+@media screen and (min-width: 801px) and (min-device-width: 801px) {
+  div#chessclock {
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  div.side {
+    flex-direction: column;
+  }
+  div.clock,
+  div.side button {
+    font-size: 3vw;
+  }
+}
+
+div.clock.act {
+  background-color: #aa8;
+  color: #115;
+}
+div.clock.ina {
+  background-color: #886;
+  color: #224;
+}
+
+div.side button.act {
+  background-color: #ccc;
+  border-style: outset;
+}
+div.side button.ina {
+  background-color: #999;
+  border-style: inset;
+  cursor: not-allowed;
+}
+
+/* Pages */
+
+.pages {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.page {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+/* Login Page */
+
+.login.page {
+  background-color: #000;
+}
+
+.login.page .form {
+  height: 100px;
+  margin-top: -100px;
+  position: absolute;
+
+  text-align: center;
+  top: 50%;
+  width: 100%;
+}
+
+.login.page .form .usernameInput {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #fff;
+  outline: none;
+  padding-bottom: 15px;
+  text-align: center;
+  width: 400px;
+}
+
+.login.page .title {
+  font-size: 200%;
+}
+
+.login.page .usernameInput {
+  font-size: 200%;
+  letter-spacing: 3px;
+}
+
+.login.page .title,
+.login.page .usernameInput {
+  color: #fff;
+  font-weight: 100;
+}
+
+/* Chat page */
+
+.chat.page {
+  display: none;
+}
+
+/* Font */
+
+.messages {
+  font-size: 150%;
+}
+
+.inputMessage {
+  font-size: 100%;
+}
+
+.log {
+  color: gray;
+  font-size: 70%;
+  margin: 5px;
+  text-align: center;
+}
+
+/* Messages */
+
+.chatArea {
+  height: 100%;
+  padding-bottom: 60px;
+}
+
+.messages {
+  height: 100%;
+  margin: 0;
+  overflow-y: scroll;
+  padding: 10px 20px 10px 20px;
+}
+
+.message.typing .messageBody {
+  color: gray;
+}
+
+.username {
+  font-weight: 700;
+  overflow: hidden;
+  padding-right: 15px;
+  text-align: right;
+}
+
+/* Input */
+
+.inputMessage {
+  border: 10px solid #000;
+  bottom: 0;
+  height: 60px;
+  left: 0;
+  outline: none;
+  padding-left: 10px;
+  position: absolute;
+  right: 0;
+  width: 100%;
+}
