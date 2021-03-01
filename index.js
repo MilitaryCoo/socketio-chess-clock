@@ -6,7 +6,7 @@ var io = require("socket.io")(server);
 var port = process.env.PORT || 3000;
 var timerTimes = {test:[45*600,45*600]};
 
-const CLOCK_TIME = 45 * 60 // in seconds
+const CLOCK_TIME = 45 * 60 * 10 // in tenths of a second
 
 server.listen(port, function() {
   console.log("Server listening at port %d", port);
@@ -15,8 +15,8 @@ server.listen(port, function() {
 // Routing
 app.use(express.static("public"));
 
-function initializeRoom(data){
-  timerTimes[data.roomId] = [data.totalTime * 60, data.totalTime * 60];
+function initializeRoom(roomId){
+  timerTimes[roomId] = [CLOCK_TIME, CLOCK_TIME];
 };
 
 io.on("connection", function(socket) {
@@ -24,16 +24,14 @@ io.on("connection", function(socket) {
   
   // when a user joins a room, emit an event
   
-  socket.on("join room", function(data){
+  socket.on("join room", function(roomId){
     if(joinedRoom) return;
     joinedRoom = true;
-    var roomId = data.roomId;
-    var totalTime = data.totalTime;
     socket.join(roomId);
     socket.emit('login', {roomId:roomId});
     if(!(roomId in timerTimes)) {
-      initializeRoom(data);
-      console.log('created room ' + roomId + 'with ' + totalTime + ' minutes');
+      initializeRoom(roomId);
+      console.log('created room ' + roomId);
     }
     socket.emit('times', {timeValues:timerTimes[roomId]});
   });
@@ -44,7 +42,10 @@ io.on("connection", function(socket) {
     timerTimes[room] = data.timeValues;
     console.log('pausing all');
     socket.to(room).broadcast.emit('pause all', data);
-
+    //data['clockId'] = 0;
+    //socket.to(room).broadcast.emit('pause', data);
+    //data['clockId'] = 1;
+    //socket.to(room).broadcast.emit('pause', data);
   });
 
   socket.on('pause', function(data){

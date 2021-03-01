@@ -14,15 +14,14 @@ $(function() {
   var $login = $("#login");
   var $chessclock = $("#chessclock");
   var $roomLabel = $("#roomId");
-  var $time = $("#time");
 
   var death = [false, false];
   var roomId = "test";
   var connected = false;
   $chessclock.hide();
 
-  const increment = 1000; // 1 second
-  const DEATH_CLOCK = 5 * 60; // death clock
+  const increment = 100; // 1/10 second
+  const DEATH_CLOCK = 5 * 60 * 10; //  minute death clock
 
   let isRunning = [false, false];
   let interval = [];
@@ -80,22 +79,7 @@ $(function() {
     if (roomId) {
       $login.fadeOut();
       $chessclock.show();
-      var enteredTimerTime = getTimerTime();
-      console.log('Time set to ' + enteredTimerTime);
-      var data = {"roomId":roomId, "totalTime":enteredTimerTime};
-      socket.emit("join room", data);
-    }
-  }
-  
-  function getTimerTime() {
-    var t = parseInt(cleanInput($time.val().trim()));
-    
-    console.log("Entered time => " + t);
-    
-    if (t && Number.isInteger(t)) {
-      return t;
-    } else {
-      return 45;
+      socket.emit("join room", roomId);
     }
   }
 
@@ -148,11 +132,11 @@ $(function() {
 
   function updateTimes() {
     for (let id = 0; id < 2; id++) {
-      var numberOfMinutes = Math.floor(Math.abs(timerTime[id]) / 60);
+      var numberOfMinutes = Math.floor(Math.abs(timerTime[id]) / 600);
       var numberOfSeconds = Math.floor(
-        Math.abs(timerTime[id]) - numberOfMinutes * 60
+        (Math.abs(timerTime[id]) - numberOfMinutes * 600) / 10
       );
-      var numberOfTenths = 0; //Math.abs(timerTime[id]) % 10;
+      var numberOfTenths = Math.abs(timerTime[id]) % 10;
       seconds[id].text(pad(numberOfSeconds));
       minutes[id].text(pad(numberOfMinutes));
       tenths[id].text(numberOfTenths);
@@ -163,6 +147,7 @@ $(function() {
           pauseClocks();
           minutes[id].text('💀💀');
           seconds[id].text('💀💀');
+          tenths[id].text('💀');
         } // Game ends
       }
     }
