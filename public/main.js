@@ -143,7 +143,12 @@ $(function() {
       if (timerTime[id] < 0) {
         death[id] = true;
         $("#clock" + id).addClass("death");
-        if (Math.abs(timerTime[id]) > DEATH_CLOCK) pauseClocks(); // Game ends
+        if (Math.abs(timerTime[id]) > DEATH_CLOCK) {
+          pauseClocks();
+          minutes[id].text('💀💀');
+          seconds[id].text('💀💀');
+          tenths[id].text('💀');
+        } // Game ends
       }
     }
   }
