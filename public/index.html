@@ -10,10 +10,20 @@
       <h2>
         OwenClock 3000
       </h2>
-      <input type="text" maxlength="4" class="pwdInput" />
+      <ul>
+        <li>
+          <label for="pwdInput">Room ID</label>
+          <input type="text" maxlength="4" class="pwdInput" id="pwdInput" />
+        </li>
+      <li>
+        <label for="time">Time (mins)</label>
+        <input type="number" maxlength="3" id="time" value="45" />
+      </li>
       <button id="submitPwd">
         Join room
       </button>
+      </ul>
+      
     </div>
 
     <div id="chessclock">
