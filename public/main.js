@@ -14,6 +14,7 @@ $(function() {
   var $login = $("#login");
   var $chessclock = $("#chessclock");
   var $roomLabel = $("#roomId");
+  var $time = $("#time");
 
   var death = [false, false];
   var roomId = "test";
@@ -21,7 +22,8 @@ $(function() {
   $chessclock.hide();
 
   const increment = 100; // 1/10 second
-  const DEATH_CLOCK = 5 * 60 * 10; //  minute death clock
+  const MINUTE_IN_INCREMENTS = 60 * 10;
+  const DEATH_CLOCK = 5 * 60 * 10; // death clock
 
   let isRunning = [false, false];
   let interval = [];
@@ -79,7 +81,22 @@ $(function() {
     if (roomId) {
       $login.fadeOut();
       $chessclock.show();
-      socket.emit("join room", roomId);
+      var enteredTimerTime = getTimerTime();
+      console.log('Time set to ' + enteredTimerTime);
+      var data = {"roomId":roomId, "totalTime":enteredTimerTime};
+      socket.emit("join room", data);
+    }
+  }
+  
+  function getTimerTime() {
+    var t = parseInt(cleanInput($time.val().trim()));
+    
+    console.log("Entered time => " + t);
+    
+    if (t && Number.isInteger(t)) {
+      return t * MINUTE_IN_INCREMENTS;
+    } else {
+      return 45 * MINUTE_IN_INCREMENTS;
     }
   }
 
@@ -132,9 +149,10 @@ $(function() {
 
   function updateTimes() {
     for (let id = 0; id < 2; id++) {
-      var numberOfMinutes = Math.floor(Math.abs(timerTime[id]) / 600);
+      console.log('timer' + id +' : ' + timerTime[id]);
+      var numberOfMinutes = Math.floor(Math.abs(timerTime[id]) / MINUTE_IN_INCREMENTS);
       var numberOfSeconds = Math.floor(
-        (Math.abs(timerTime[id]) - numberOfMinutes * 600) / 10
+        (Math.abs(timerTime[id]) - numberOfMinutes * MINUTE_IN_INCREMENTS) / 10
       );
       var numberOfTenths = Math.abs(timerTime[id]) % 10;
       seconds[id].text(pad(numberOfSeconds));
@@ -147,7 +165,6 @@ $(function() {
           pauseClocks();
           minutes[id].text('💀💀');
           seconds[id].text('💀💀');
-          tenths[id].text('💀');
         } // Game ends
       }
     }
@@ -180,11 +197,6 @@ $(function() {
 
   function pad(number) {
     return number < 10 ? "0" + number : number;
-    // if (number < 10) {
-    //   return '0' + number;
-    // } else {
-    //   return number;
-    // }
   }
 
   function makeid(length) {
